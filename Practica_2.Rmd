@@ -1,5 +1,5 @@
 ---
-title: 'Pr‡ctica 2: Tipologia i cicle de vida de les dades'
+title: 'Pr√†ctica 2: Tipologia i cicle de vida de les dades'
 author: 'Victor Garcia Domingo i Ivan Jalencas Lobera'
 date: '`r format(Sys.Date(),"%e de %B, %Y")`'
 output:
@@ -11,30 +11,30 @@ output:
     toc: yes
 ---
 
-# 1. DescripciÛ del dataset. Per quË Ès important i quina pregunta/problema pretÈn respondre?
+# 1. Descripci√≥ del dataset. Per qu√® √©s important i quina pregunta/problema pret√©n respondre?
 
-```{r C‡rrega del fitxer}
+```{r C√†rrega del fitxer}
 df_train <- read.csv("dataset/train.csv")
 head(df_train)
 ```
 
 
-```{r DescripciÛ de les dades}
+```{r Descripci√≥ de les dades}
 str(df_train)
 sapply(df_train, class)
 ```
 
-```{r C‡rrega del fitxer de prova}
+```{r C√†rrega del fitxer de prova}
 df_test <- read.csv("dataset/test.csv")
 head(df_test)
 ```
 
-```{r DescripciÛ de les dades d\'entrenament}
+```{r Descripci√≥ de les dades d\'entrenament}
 str(df_test)
 sapply(df_test, class)
 ```
 
-El dataset Ès un cl‡ssic que descriu els passatgers del Titanic.  Est‡ dividit en dos conjunt de dades amb 12 variables. El conjunt d'entrenament es composa de 891 observacions i el de test de 418, tot i que aquest li falta la variable Survived. Les variables sÛn les seg¸ents: 
+El dataset √©s un cl√†ssic que descriu els passatgers del Titanic.  Est√† dividit en dos conjunt de dades amb 12 variables. El conjunt d'entrenament es composa de 891 observacions i el de test de 418, tot i que aquest li falta la variable Survived. Les variables s√≥n les seg√ºents: 
 
 - **PassengerId**: *identificador de passatger*
 - **Survived:** *si ha sobreviscut (1) o no (0)*
@@ -44,24 +44,24 @@ El dataset Ès un cl‡ssic que descriu els passatgers del Titanic.  Est‡ dividit e
 - **Age:** *edat*
 - **SibSp:** *nombre de germans*
 - **Parch:** *nombre de pares o fills a bord*
-- **Ticket:** *n˙mero de tiquet*
+- **Ticket:** *n√∫mero de tiquet*
 - **Fare:** *tarifa*
 - **Cabin:** *cabina*
 - **Embarked:** *port d'embarcament (C = Cherbourg; Q = Queenstown; S = Southampton)*
 
-Aquest dataset Ès important perquË permet descobrir si els passatgers del titanic van sobreviure i quines variables hi estan relacionades. Al ser un dataset tant conegut tambÈ serveix com a benchmark a l'hora de provar nous models de predicciÛ.
+Aquest dataset √©s important perqu√® permet descobrir si els passatgers del titanic van sobreviure i quines variables hi estan relacionades. Al ser un dataset tant conegut tamb√© serveix com a benchmark a l'hora de provar nous models de predicci√≥.
 
-La pregunta que ens plantegem Ès, hi ha factors que tenen mÈs incidËncia a l'hora d'explicar la supervivËncia? Ens podem fer preguntes mÈs concretes com si van sobreviure mÈs els viatges de primera classe sobrevisquÈs respecte als de segona o tercera classe. Viatjar sol garantia mÈs probabilitats de supervivËncia que anant en familia o potser va ser a l'inversa? 
-
-
-# 2. IntegraciÛ i selecciÛ de dades d'interËs a analitzar
-
-En aquest apartat, carregarem i seleccionarem les dades que ens seran ˙tils per a posteriors an‡lisis. Treballarem principalment amb el grup de dades d'entrenament, perÚ per algun apartat treballarem amb el conjunt de dades sencer, per lo que les haurem d'integrar en un mateix dataframe.
-
-Seleccionem les que ens interessen. Per a fer l'an‡lisi posterior, no ens interessa l'identificador de passatger, el nom, el n˙mero de tiquet ni la cabina. Tampoc la tarifa (Fare), ja que creiem que la variable *Pclass* ja dÛna informaciÛ relativa al poder adquisitiu del passatger. Seleccionarem la resta de variables i posarem la variable *Survived* al final, ja que ser‡ la dependent per a fer prediccions. TambÈ convertirem a factors les variables *Sex*, *Embarked*, *Pclass* i *Survived*.
+La pregunta que ens plantegem √©s, hi ha factors que tenen m√©s incid√®ncia a l'hora d'explicar la superviv√®ncia? Ens podem fer preguntes m√©s concretes com si van sobreviure m√©s els viatges de primera classe sobrevisqu√©s respecte als de segona o tercera classe. Viatjar sol garantia m√©s probabilitats de superviv√®ncia que anant en familia o potser va ser a l'inversa? 
 
 
-```{r SelecciÛ de dades}
+# 2. Integraci√≥ i selecci√≥ de dades d'inter√®s a analitzar
+
+En aquest apartat, carregarem i seleccionarem les dades que ens seran √∫tils per a posteriors an√†lisis. Treballarem principalment amb el grup de dades d'entrenament, per√≤ per algun apartat treballarem amb el conjunt de dades sencer, per lo que les haurem d'integrar en un mateix dataframe.
+
+Seleccionem les que ens interessen. Per a fer l'an√†lisi posterior, no ens interessa l'identificador de passatger, el nom, el n√∫mero de tiquet ni la cabina. Tampoc la tarifa (Fare), ja que creiem que la variable *Pclass* ja d√≥na informaci√≥ relativa al poder adquisitiu del passatger. Seleccionarem la resta de variables i posarem la variable *Survived* al final, ja que ser√† la dependent per a fer prediccions. Tamb√© convertirem a factors les variables *Sex*, *Embarked*, *Pclass* i *Survived*.
+
+
+```{r Selecci√≥ de dades}
 if(!require(dplyr)){
   install.packages("dplyr")
   library(dplyr)
@@ -70,9 +70,9 @@ attach(df_train)
 
 df_sel_train <- df_train %>% select(Pclass, Sex, Age, SibSp, Parch, Embarked, Survived)
 
-df_sel_train$isTrain <- 1   # Aquesta variable ens servir‡ per distingir del conjunt d'entrenament i el de test en el dataframe integrat
+df_sel_train$isTrain <- 1   # Aquesta variable ens servir√† per distingir del conjunt d'entrenament i el de test en el dataframe integrat
 
-df_sel_train$hasFamily <- ifelse(df_sel_train$Parch + df_sel_train$SibSp > 0, "Family", "No family") # Aquesta variable derivada d'altres dos ens servir‡ per poder respondre a la pregunta de si viatjar sol augmentava la probabilitat de sobreviure
+df_sel_train$hasFamily <- ifelse(df_sel_train$Parch + df_sel_train$SibSp > 0, "Family", "No family") # Aquesta variable derivada d'altres dos ens servir√† per poder respondre a la pregunta de si viatjar sol augmentava la probabilitat de sobreviure
 
 df_sel_train$Sex <- factor(df_sel_train$Sex)
 df_sel_train$Embarked <- factor(df_sel_train$Embarked)
@@ -82,7 +82,7 @@ df_sel_train$hasFamily <- factor(df_sel_train$hasFamily)
 
 head(df_sel_train)
 ```
-```{r SelecciÛ de dades 2}
+```{r Selecci√≥ de dades 2}
 attach(df_test)
 
 df_sel_test <- df_test %>% select(Pclass, Sex, Age, SibSp, Parch, Embarked)
@@ -94,7 +94,7 @@ df_sel_test$hasFamily <- ifelse(df_sel_test$Parch + df_sel_test$SibSp > 0, "Fami
 df_sel_test$Sex <- factor(df_sel_test$Sex)
 df_sel_test$Embarked <- factor(df_sel_test$Embarked)
 df_sel_test$Pclass <- factor(df_sel_test$Pclass)
-df_sel_test$isTrain <- 1   # Aquesta variable ens servir‡ per distingir del conjunt d'entrenament i el de test en el dataframe integrat
+df_sel_test$isTrain <- 1   # Aquesta variable ens servir√† per distingir del conjunt d'entrenament i el de test en el dataframe integrat
 df_sel_test$hasFamily <- factor(df_sel_test$hasFamily)
 
 
@@ -122,17 +122,17 @@ str(df_sel_complete)
 ## 3.1. Les dades contenen zeros o elements buits? Com gestionaries aquests casos?
 
 
-A continuaciÛ, es descriuen els estadÌstics de les dades i els valors nuls. Podem observar que les variables *Age* i *Survived* tenen valors nuls (NA) i la variables *Embarked*, valors buits. 
+A continuaci√≥, es descriuen els estad√≠stics de les dades i els valors nuls. Podem observar que les variables *Age* i *Survived* tenen valors nuls (NA) i la variables *Embarked*, valors buits. 
 
 ```{r Zeros i elements buits}
 summary(df_sel_complete)
 ```
 
 
-Per a la variable *Age*, s'ha decidit imputar el valor amb k-means, ja que generalment imputar els valors dels veÔns mÈs propers Ès bastant eficaÁ. Per a la variable *Embarked*, amb el valor mÈs com˙, que Ès 'S'. Deixarem els valosr nuls de la variable *Survived* com estan ja que aquests s'haurien d'omplir mitjanÁant un model de predicciÛ, que no abordarem en aquesta pr‡ctica.
+Per a la variable *Age*, s'ha decidit imputar el valor amb k-means, ja que generalment imputar els valors dels ve√Øns m√©s propers √©s bastant efica√ß. Per a la variable *Embarked*, amb el valor m√©s com√∫, que √©s 'S'. Deixarem els valosr nuls de la variable *Survived* com estan ja que aquests s'haurien d'omplir mitjan√ßant un model de predicci√≥, que no abordarem en aquesta pr√†ctica.
 
-- ImputaciÛ de la variable *Age*:
-```{r ImputaciÛ Age amb k-means}
+- Imputaci√≥ de la variable *Age*:
+```{r Imputaci√≥ Age amb k-means}
 if(!require(VIM)){
   install.packages("VIM")
   library(VIM)
@@ -149,7 +149,7 @@ sum(is.na(df_sel_complete$Age))
 Podem comprovar que dels 263 valors nuls inicials, ja no hi ha cap.
 
 
-- ImputaciÛ de la variable *Embarked*:
+- Imputaci√≥ de la variable *Embarked*:
 ```{r}
 df_sel_complete[which(df_sel_complete$Embarked == ""),]$Embarked <- "S"
 
@@ -159,7 +159,7 @@ summary(df_sel_complete$Embarked)
 df_sel_complete$Embarked <- factor(df_sel_complete$Embarked)
 ```
 
-Comprovem tambÈ que la variable *Embarked* ja no tÈ valors buits 
+Comprovem tamb√© que la variable *Embarked* ja no t√© valors buits 
 
 
 ```{r}
@@ -169,15 +169,15 @@ str(df_sel_train)
 ```
 
 
-## 3.2. IdentificaciÛ i tractament de valors extrems
+## 3.2. Identificaci√≥ i tractament de valors extrems
 
 Primer de tot, descriurem els valors de les dades i analitzarem els valors extrems. 
 
-```{r DescripciÛ dels valors de les dades}
+```{r Descripci√≥ dels valors de les dades}
 summary(df_sel_train)
 ```
 
-Podem veure que la variable SibSp tÈ com a mitjana 0,523 i com a valor m‡xim 8. La variable Parch, tÈ com a mitjana el valor 0,3816 i com a m‡xim, el valor 8. TambÈ observem com el valor m‡xim de la variable Age Ès el doble del valor del tercer quartil. Aquestes tres variables sÛn candidates a tenir valors extrems. Analitzem els diagrames de caixes.
+Podem veure que la variable SibSp t√© com a mitjana 0,523 i com a valor m√†xim 8. La variable Parch, t√© com a mitjana el valor 0,3816 i com a m√†xim, el valor 8. Tamb√© observem com el valor m√†xim de la variable Age √©s el doble del valor del tercer quartil. Aquestes tres variables s√≥n candidates a tenir valors extrems. Analitzem els diagrames de caixes.
 
 
 ```{r Valors extrems}
@@ -189,7 +189,7 @@ for (i in 1:length(quantitativeVars)){
   print(boxplot.stats(df_sel_train[[quantitativeVars[i]]])$out)
 }
 ```
-S'observa que, si compten els valors de les variables *SibSp* i *Parch*, ens trobem amb que la primera tÈ set valors igual a 8 i cinc igual a 5, i la segona tÈ un valor igual a 6. En el cas de la variable *Age* hi ha 8 casos amb 66 anys o mÈs. Els eliminarem,
+S'observa que, si compten els valors de les variables *SibSp* i *Parch*, ens trobem amb que la primera t√© set valors igual a 8 i cinc igual a 5, i la segona t√© un valor igual a 6. En el cas de la variable *Age* hi ha 8 casos amb 66 anys o m√©s. Els eliminarem,
 
 ```{r Recompte de valors (valors extrems)}
 df_sel_train %>% count(SibSp, sort = TRUE)
@@ -199,13 +199,13 @@ df_sel_train %>% count(Age, sort = FALSE)
 
 Eliminem les observacions indicades. Ens quedem 870 observacions. 
 
-```{r EliminaciÛ de valors extrems}
+```{r Eliminaci√≥ de valors extrems}
 df_sel_train<-df_sel_train[!(df_sel_train$SibSp==5 | df_sel_train$SibSp==8 | df_sel_train$Parch==6| df_sel_train$Age>=66),]
 
 str(df_sel_train)
 ```
 
-Observem la nova distribuciÛ. 
+Observem la nova distribuci√≥. 
 
 ```{r Boxplot resultant (valors extrems)}
 quantitativeVars <- c("SibSp", "Parch", "Age")
@@ -221,11 +221,11 @@ for (i in 1:length(quantitativeVars)){
 write.csv(df_sel_complete,"titanic.csv", row.names = FALSE)
 ```
 
-# 4. An‡lisis de les dades
+# 4. An√†lisis de les dades
 
-## 4.1. SelecciÛ dels grups de dades.
+## 4.1. Selecci√≥ dels grups de dades.
 
-Les variables disponibles sÛn Pclass, Sex, Age, SibSp, Parch, Embarked i Survived. Podem agrupar les dades de la seg¸ent manera:
+Les variables disponibles s√≥n Pclass, Sex, Age, SibSp, Parch, Embarked i Survived. Podem agrupar les dades de la seg√ºent manera:
 
 - Per sexe: 
 ```{r Agrupament per Sexe}
@@ -255,18 +255,18 @@ titanic.portQ <- df_sel_train[df_sel_train$Embarked == "Q",]
 ```
 
 - Per si han sobreviscut o no:
-```{r Agrupament per SupervivËncia}
+```{r Agrupament per Superviv√®ncia}
 titanic.survivedyes <- df_sel_train[df_sel_train$Survived == "Survived",]
 titanic.survivedno <- df_sel_train[df_sel_train$Survived == "Didn't survive",]
 ```
 
 
 
-## 4.2. ComprovaciÛ de la normalitat i homogeneÔtat de la vari‡ncia.
+## 4.2. Comprovaci√≥ de la normalitat i homogene√Øtat de la vari√†ncia.
 
-### 4.2.1. ComprovaciÛ de la normalitat:
+### 4.2.1. Comprovaci√≥ de la normalitat:
 
-```{r ComprobaciÛ de la normalitat}
+```{r Comprobaci√≥ de la normalitat}
 if(!require(nortest)){
   install.packages("nortest")
   library(nortest) 
@@ -276,7 +276,7 @@ alpha = 0.05
 col.names = colnames(df_sel_complete)
 
 for (i in 1:ncol(df_sel_complete)) {
-  if (i == 1) cat("Variables que no siguen una distribuciÛn normal:\n")
+  if (i == 1) cat("Variables que no siguen una distribuci√≥n normal:\n")
   if (is.integer(df_sel_complete[,i]) | is.numeric(df_sel_complete[,i])) {
     p_val = ad.test(df_sel_complete[,i])$p.value
     if (p_val < alpha) {
@@ -289,20 +289,20 @@ for (i in 1:ncol(df_sel_complete)) {
 }
 ```
 
-### 4.2.2. HomogeneÔtat de la vari‡ncia:
+### 4.2.2. Homogene√Øtat de la vari√†ncia:
 
 ```{r}
 fligner.test(Age ~ Survived, data = df_sel_complete)
 
 ```
-La majÚria de les variables sÛn categÚriques. Per aixÚ, fem l'an‡lisi de l'homogeneitat de la vari‡ncia de la variable *Age* pel cas dels que han sobresviscut i els que no. Com el p-value Ès superior a 0.05 no podem descartar la hipÚtesis nul∑La de que les vari‡ncies sÛn homogËnees. 
+La maj√≤ria de les variables s√≥n categ√≤riques. Per aix√≤, fem l'an√†lisi de l'homogeneitat de la vari√†ncia de la variable *Age* pel cas dels que han sobresviscut i els que no. Com el p-value √©s superior a 0.05 no podem descartar la hip√≤tesis nul¬∑La de que les vari√†ncies s√≥n homog√®nees. 
 
 
-## 4.3. Proves estadÌstiques.
+## 4.3. Proves estad√≠stiques.
 
 ### 4.3.1 Correlacions
 
-Per a fer el test de correlacions, com que la major part de les dades sÛn categÚriques, obtindrem una matriu de V de Cramer. 
+Per a fer el test de correlacions, com que la major part de les dades s√≥n categ√≤riques, obtindrem una matriu de V de Cramer. 
 
 ```{r}
 if(!require(vcd)){
@@ -318,27 +318,27 @@ ccatcorrm(c('Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Embarked', 'Survived'), d
 ```
 
 
-Com es pot observar, no hi ha correlacions molt intenses, sent les m‡ximes entre *Sex* i *Survived* i entre *Embarked* i *Age*. 
+Com es pot observar, no hi ha correlacions molt intenses, sent les m√†ximes entre *Sex* i *Survived* i entre *Embarked* i *Age*. 
 
-### 4.3.2 Contrast d'hipÚtesis
+### 4.3.2 Contrast d'hip√≤tesis
 
-Volem saber si l'edat dels que van sobreviure Ès mÈs gran que la dels que no. Per a aixÚ, realitzem un contrast d'hipÚtesis en el que la hipÚtesi nul∑la ser‡ que sÛn iguals,i l'alternativa, que l'edat Ès mÈs alta per als que van sobreviure.
+Volem saber si l'edat dels que van sobreviure √©s m√©s gran que la dels que no. Per a aix√≤, realitzem un contrast d'hip√≤tesis en el que la hip√≤tesi nul¬∑la ser√† que s√≥n iguals,i l'alternativa, que l'edat √©s m√©s alta per als que van sobreviure.
 
-Podriem fer servir el t-student, ja que les mostres sÛn mÈs grans de 30 i aixÚ permet suposar normalitat, perÚ aplicarem el test no paramËtric de Mann-Whitney perquË hem vist que les variables Pclass, Age, 
-SibSp, Parch, Survived no segueixen una distribuciÛ normal. 
+Podriem fer servir el t-student, ja que les mostres s√≥n m√©s grans de 30 i aix√≤ permet suposar normalitat, per√≤ aplicarem el test no param√®tric de Mann-Whitney perqu√® hem vist que les variables Pclass, Age, 
+SibSp, Parch, Survived no segueixen una distribuci√≥ normal. 
 
 ```{r Contrast hipotesis (Mann-Whitney)}
 wilcox.test(titanic.survivedyes$Age, titanic.survivedno$Age, alternative = "greater")
 ```
 
-El p-value Ès de 0.9951 per lo que no podem rebutjar la hipÚtesi nul∑la de que l'edat dels que han sobreviscut Ès distribueix igual a la dels que no han sobreviscut. 
+El p-value √©s de 0.9951 per lo que no podem rebutjar la hip√≤tesi nul¬∑la de que l'edat dels que han sobreviscut √©s distribueix igual a la dels que no han sobreviscut. 
 
-En qualsevol cas, si apliquem el t student, el p-value Ès 0,9996, no molt allunyat de Mann-Whitney. 
+En qualsevol cas, si apliquem el t student, el p-value √©s 0,9996, no molt allunyat de Mann-Whitney. 
 
 ```{r Contrast hipotesis (t-Student)}
 t.test(titanic.survivedyes$Age, titanic.survivedno$Age, alternative = "greater")
 ```
-Per altra banda, volem comparar si la proporciÛ de supervivents de primera clase Ès significativament superior a la dels dos altres grups. 
+Per altra banda, volem comparar si la proporci√≥ de supervivents de primera clase √©s significativament superior a la dels dos altres grups. 
 
 ```{r Contrast hipotesis (t-Student) 2}
 cross <- table(df_sel_train$Survived, df_sel_train$Pclass)
@@ -349,7 +349,7 @@ addmargins(cross)
 ```{r Contrast hipotesis (t-Student) 3}
 prop.test(c(135, 87+119), c(212, 182 + 476), alternative = "greater")
 ```
-El p-value Ès molt inferior a 0.05, per lo que podem descartar la hipÚtesis nul∑la de que les proporcions sÛn iguals i acceptar la hipÚtesis alternativa de que la supervivËncia a la primera classe era superior a la de resta de classes.
+El p-value √©s molt inferior a 0.05, per lo que podem descartar la hip√≤tesis nul¬∑la de que les proporcions s√≥n iguals i acceptar la hip√≤tesis alternativa de que la superviv√®ncia a la primera classe era superior a la de resta de classes.
 
 ```{r Contrast hipotesis (t-Student) 4}
 cross <- table(df_sel_train$Survived, df_sel_train$hasFamily)
@@ -358,11 +358,11 @@ addmargins(cross)
 ```{r Contrast hipotesis (t-Student) 5}
 prop.test(c(179, 162), c(340, 530), alternative = "greater")
 ```
-A l'igual que abans, el p-value Ès molt mÈs petit que 0.05, per lo que rebutgem la hipÚtesi nul∑la de igualtat a les proporcions i acceptem la hipÚtesi alternativa que afirma que la tasa de supervivËncia era superior en el cas de viatjar amb famÌlia.
+A l'igual que abans, el p-value √©s molt m√©s petit que 0.05, per lo que rebutgem la hip√≤tesi nul¬∑la de igualtat a les proporcions i acceptem la hip√≤tesi alternativa que afirma que la tasa de superviv√®ncia era superior en el cas de viatjar amb fam√≠lia.
 
-### 4.3.3 RegressiÛ logÌstica
+### 4.3.3 Regressi√≥ log√≠stica
 
-Com que la variable a predir Ès categÚrica, necessitem fer servir un model de regressiÛ logÌstica. Les variables mÈs relacionades sÛn SibSp, Parch i Sex. Provarem amb diferents combinacions de les tres. 
+Com que la variable a predir √©s categ√≤rica, necessitem fer servir un model de regressi√≥ log√≠stica. Les variables m√©s relacionades s√≥n SibSp, Parch i Sex. Provarem amb diferents combinacions de les tres. 
 
 ```{r}
 # Variables independents
@@ -382,7 +382,7 @@ model4 <- glm(survived ~ sex, data = df_sel_train, family = 'binomial')
 model5 <- glm(survived ~ sex + parentschildren + siblings + pclass + age, data = df_sel_train, family = 'binomial')
 ```
 
-…s interessant parar atenciÛ a l'Akaike Information Criterion (AIC). Aquest Ès un test equivalent al R2, perÚ aplicat a la regressiÛ logÌstica. Permet comparar la bondat d'ajust entre diferents models, veure com de rellevants sÛn els regressors i evitar que es produeixi overfitting. Contra mÈs baix sigui l'Ìndex, millor un model respecte a un altre.A partir de la taula inferior, podem veure que el model 5 Ès el millor, ja que tÈ un AIC inferior a la resta. Per tant, les tres variables que mÈs correlacionades estan amb la supervivËncia sÛn les que expliquen millor el model. 
+√âs interessant parar atenci√≥ a l'Akaike Information Criterion (AIC). Aquest √©s un test equivalent al R2, per√≤ aplicat a la regressi√≥ log√≠stica. Permet comparar la bondat d'ajust entre diferents models, veure com de rellevants s√≥n els regressors i evitar que es produeixi overfitting. Contra m√©s baix sigui l'√≠ndex, millor un model respecte a un altre.A partir de la taula inferior, podem veure que el model 5 √©s el millor, ja que t√© un AIC inferior a la resta. Per tant, les tres variables que m√©s correlacionades estan amb la superviv√®ncia s√≥n les que expliquen millor el model. 
 
 ```{r}
 tabla.coeficientes <- matrix(c(1, AIC(model1),
@@ -398,7 +398,7 @@ tabla.coeficientes
 ```{r}
 summary(model5)
 ```
-Fent un resum del model 5, podem afirmar que el cas en que el viatger era una dona, que viatjava en primera classe i no tenia familila era el mÈs favorable a l'hora de sobreviure. Tots els actors factors eren negatius, sent home i viatjant en tercera classe la pitjor de les combinacions. Veiem alguns exemples. 
+Fent un resum del model 5, podem afirmar que el cas en que el viatger era una dona, que viatjava en primera classe i no tenia familila era el m√©s favorable a l'hora de sobreviure. Tots els actors factors eren negatius, sent home i viatjant en tercera classe la pitjor de les combinacions. Veiem alguns exemples. 
 
 ```{r}
 
@@ -443,13 +443,13 @@ newdata <- data.frame(
 print(paste0('Home amb 3 pares i/o fills, 4 germans, de primera classe i de 15 anys: ', predict(model5, newdata)))
 ```
 
-Els resultats permeten observar com el sexe influeix molt en la supervivËncia, mÈs que les altres variables. 
+Els resultats permeten observar com el sexe influeix molt en la superviv√®ncia, m√©s que les altres variables. 
 
 
-# 5 RepresentaciÛ dels resultats a partir de taules i gr‡fiques.
+# 5 Representaci√≥ dels resultats a partir de taules i gr√†fiques.
 
 
-ComenÁarem representant les distribucions per edat dels que van sobreviure i els que no, vinculat al constrast d'hipÚtesis. 
+Comen√ßarem representant les distribucions per edat dels que van sobreviure i els que no, vinculat al constrast d'hip√≤tesis. 
 ```{r}
 if(!require(ggpubr)){
 install.packages("ggpubr")
@@ -458,7 +458,7 @@ library(ggpubr)
 ggplot(df_sel_train, aes(Age, fill = Survived)) + 
    geom_histogram(alpha = 0.4, aes(y = ..density..), position = 'identity')
 ```
-Aprofitem per fer un rep‡s a les tasas de supervivËncia en funciÛ de les diferents variables, amb gr‡fic i taula.
+Aprofitem per fer un rep√†s a les tasas de superviv√®ncia en funci√≥ de les diferents variables, amb gr√†fic i taula.
 
 ```{r}
 ggplot(df_sel_train, aes(Sex, fill=Survived)) + geom_bar(position="stack")+ylab("Count")
@@ -496,7 +496,7 @@ taula_PcST <- table(df_sel_train$Pclass, df_sel_train$Survived)
 taula_PcST
 prop.table(taula_PcST, margin = 1)
 ```
-Sembla curiÛs el cas dels embarcats al port de Cherbourg que en principi tenien millor tasa de supervivËncia. Una possible explicaciÛ pot ser que en aquest port embarquessin significativament mÈs persones de primera classe que a la resta, sent moltes d'elles dones.
+Sembla curi√≥s el cas dels embarcats al port de Cherbourg que en principi tenien millor tasa de superviv√®ncia. Una possible explicaci√≥ pot ser que en aquest port embarquessin significativament m√©s persones de primera classe que a la resta, sent moltes d'elles dones.
 
 
 ```{r}
@@ -516,9 +516,9 @@ taula_portCPcST
 prop.table(taula_portCPcST, margin = 1)
 ```
 
-# 6 ResoluciÛ del problema. A partir dels resultats obtinguts, quines sÛn les conclusions? Els resultats permeten respondre al problema?
+# 6 Resoluci√≥ del problema. A partir dels resultats obtinguts, quines s√≥n les conclusions? Els resultats permeten respondre al problema?
 
-A partir dels resultats obtinguts, podem dir que un an‡lisi detallat del conjunt de dades pot donar resposta a les preguntes plantejades, i a altres que no hem fet. Sabem que els factors amb mÈs incidËncia per explicar la supervivËncia sÛn el fet de ser dona i viatjar en primera classe. TambÈ hem vist que els que viatjaven sol van sobreviure menys que els que viatjaven en familia.
+A partir dels resultats obtinguts, podem dir que un an√†lisi detallat del conjunt de dades pot donar resposta a les preguntes plantejades, i a altres que no hem fet. Sabem que els factors amb m√©s incid√®ncia per explicar la superviv√®ncia s√≥n el fet de ser dona i viatjar en primera classe. Tamb√© hem vist que els que viatjaven sol van sobreviure menys que els que viatjaven en familia.
 
 
 # 7 Taula de contribucions
